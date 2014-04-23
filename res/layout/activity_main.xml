@@ -1,30 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity"
     android:color="@android:color/background_light" >
 
-    <net.majorkernelpanic.streaming.gl.SurfaceView
-        android:id="@+id/surface"
+    <TextView
+        android:id="@+id/main_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginTop="100dp"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:text="@string/main_text" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/editText1" />
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/server_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Server" />
+        <Button
+            android:id="@+id/server_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/server_button" />
 
-    <Button
-        android:id="@+id/client_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Button" />
+        <Button
+            android:id="@+id/client_button"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="@string/client_button" />
+    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

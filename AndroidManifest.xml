@@ -33,6 +33,15 @@
         </activity>
 
         <service android:name="net.majorkernelpanic.streaming.rtsp.RtspServer" />
+
+        <activity
+            android:name="com.davisECS.virtualfrontview.ServerActivity"
+            android:label="@string/title_activity_server" >
+        </activity>
+        <activity
+            android:name="com.davisECS.virtualfrontview.ClientActivity"
+            android:label="@string/title_activity_client" >
+        </activity>
     </application>
 
 </manifest>
