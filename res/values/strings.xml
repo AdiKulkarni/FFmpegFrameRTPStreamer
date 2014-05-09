@@ -7,7 +7,7 @@
     <string name="action_settings">Setings</string>
     <string name="title_activity_server">ServerActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="main_text">Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or Client if you would like to receive a stream.</string>
+    <string name="main_text">Welcome to Virtual Front View, please choose Server if you would like to stream from your device, or type in the IP of the server and hit Client if you would like to receive a stream.</string>
     <string name="server_button">Server</string>
     <string name="client_button">Client</string>
     <string name="title_activity_client">ClientActivity</string>
