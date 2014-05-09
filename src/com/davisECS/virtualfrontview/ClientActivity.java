@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.davisECS.virtualfrontview;
 
 import java.io.IOException;
@@ -144,3 +145,140 @@ public class ClientActivity extends Activity implements OnPreparedListener,
 	}
 
 }
+=======
+package com.davisECS.virtualfrontview;
+
+import java.io.IOException;
+
+import android.app.Activity;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnPreparedListener;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class ClientActivity extends Activity implements OnPreparedListener,
+		SurfaceHolder.Callback {
+
+	MediaPlayer mMediaPlayer;
+	SurfaceHolder mSurfaceHolder;
+	SurfaceView mSurfaceView;
+	private static String mVideoIP = "10.0.1.51";
+	private static final String TAG = "VirtualFrontView";
+	private static final String SERVER_IP = "server ip";
+	
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_client);
+		
+		mVideoIP = getIntent().getStringExtra(SERVER_IP);
+		
+		mSurfaceView = (SurfaceView) findViewById(R.id.surface_view);
+		mSurfaceHolder = mSurfaceView.getHolder();
+		mSurfaceHolder.addCallback(this);
+		
+
+		if (savedInstanceState == null) {
+
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.client, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onResume() {
+		// Create a new media player and set the listeners
+		mMediaPlayer = new MediaPlayer();
+		
+		try {
+			mMediaPlayer.setDataSource("rtsp://" + mVideoIP
+					+ ":1234");
+		} catch (IllegalArgumentException | SecurityException
+				| IllegalStateException | IOException e) {
+			e.printStackTrace();
+			Log.e(TAG, "MediaPlayer error!");
+		}
+		// mMediaPlayer.setDisplay(holder);
+		mMediaPlayer.setScreenOnWhilePlaying(true);
+		mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		mMediaPlayer.prepareAsync();
+		mMediaPlayer.setOnPreparedListener(this);
+
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		if (mMediaPlayer != null) {
+
+			mMediaPlayer.release();
+			mMediaPlayer = null;
+		}
+		super.onPause();
+	}
+
+	@Override
+	public void onPrepared(MediaPlayer mp) {
+		Log.d(TAG, "Media started!");
+		mMediaPlayer.start();
+
+	}
+
+	@Override
+	public void surfaceCreated(SurfaceHolder holder) {
+		try {
+			mMediaPlayer = new MediaPlayer();
+			mMediaPlayer.setDisplay(mSurfaceHolder);
+			mMediaPlayer.setDataSource("rtsp://" + mVideoIP
+					+ ":1234");
+			mMediaPlayer.prepare();
+			mMediaPlayer.setOnPreparedListener(this);
+			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void surfaceChanged(SurfaceHolder holder, int format, int width,
+			int height) {
+
+	}
+
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+
+	}
+
+}
+>>>>>>> 2d09dc26efa5096a3f7c264007cb0c54dcc38278
