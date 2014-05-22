@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
 
 		mEnterIp = (EditText) findViewById(R.id.ip_text);
 		mUserIp = (TextView) findViewById(R.id.user_ip);
+		mEnterIp.setText("192.168.49.");
 		mUserIp.setText("Your IP: " + ip);
 		// Get button references
 		mServerButton = (Button) findViewById(R.id.server_button);

@@ -5,6 +5,8 @@ import java.io.IOException;
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnErrorListener;
+import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +18,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class ClientActivity extends Activity implements OnPreparedListener,
+public class ClientActivity extends Activity implements OnPreparedListener, OnErrorListener, OnInfoListener, 
 		SurfaceHolder.Callback {
 
 	MediaPlayer mMediaPlayer;
@@ -26,7 +29,7 @@ public class ClientActivity extends Activity implements OnPreparedListener,
 	private static String mVideoIP = "";
 	private static final String TAG = "VirtualFrontView";
 	private static final String SERVER_IP = "server ip";
-	
+	private static long mTimeStarted;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class ClientActivity extends Activity implements OnPreparedListener,
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.client, menu);
+		//getMenuInflater().inflate(R.menu.client, menu);
 		return true;
 	}
 
@@ -121,6 +124,9 @@ public class ClientActivity extends Activity implements OnPreparedListener,
 			mMediaPlayer.setOnPreparedListener(this);
 			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 			mMediaPlayer.setScreenOnWhilePlaying(true);
+			mMediaPlayer.setOnErrorListener(this);
+			mMediaPlayer.setOnInfoListener(this);
+			mTimeStarted = System.currentTimeMillis();
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {
@@ -141,6 +147,24 @@ public class ClientActivity extends Activity implements OnPreparedListener,
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 
+	}
+
+	@Override
+	public boolean onError(MediaPlayer mp, int what, int extra) {
+		// TODO Auto-generated method stub
+		finish();
+		return false;
+	}
+
+	@Override
+	public boolean onInfo(MediaPlayer mp, int what, int extra) {
+		// TODO Auto-generated method stub
+		long timeEnded = System.currentTimeMillis();
+		if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+			if (timeEnded - mTimeStarted >= 2500)
+				finish();
+		}
+		return false;
 	}
 
 }
