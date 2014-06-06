@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/bitrate_array"
                 android:prompt="@string/bitrate_prompt" 
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <Spinner
                 android:id="@+id/resolution_spinner"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/resolution_array"
                 android:prompt="@string/resolution_prompt"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <Button
