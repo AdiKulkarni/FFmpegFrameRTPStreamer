@@ -12,22 +12,15 @@ import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 public class ServerActivity extends Activity implements Session.Callback,
 		SurfaceHolder.Callback {
 
 	private final static String TAG = "VirtualFrontView";
-	private static final String BITRATE = "bitrate";
-	private static final String RESOLUTION = "resolution";
-	
+	private int bitrate = 500000;
 	private SurfaceView mSurfaceView;
-
-	// For client video playback
-	MediaPlayer mediaPlayer;
 	SurfaceHolder surfaceHolder;
 
 	@Override
@@ -36,47 +29,21 @@ public class ServerActivity extends Activity implements Session.Callback,
 		setContentView(R.layout.activity_server);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
 
-		// Sets the port of the RTSP server to 8988
+		// Sets the port of the RTSP server to 4002
 		Editor editor = PreferenceManager.getDefaultSharedPreferences(
 				getApplicationContext()).edit();
-		editor.putString(RtspServer.KEY_PORT, String.valueOf(8988));
+		editor.putString(RtspServer.KEY_PORT, String.valueOf(4002));
 		editor.commit();
-
-		// Get bitrate
-		int bitrate = Integer.valueOf(getIntent().getStringExtra(BITRATE));
-		if (bitrate < 100000)
-			bitrate = 100000;
-
-		// Get resolution
-		String resolution = getIntent().getStringExtra(RESOLUTION);
-		int resX = 176;
-		int resY = 144;
-		if (resolution.equals("352x288")) {
-			resX = 352;
-			resY = 288;
-		} else if (resolution.equals("528x432")) {
-			resX = 528;
-			resY = 432;
-		} else if (resolution.equals("704x576")) {
-			resX = 704;
-			resY = 576;
-		} else {
-			resX = 176;
-			resY = 144;
-		}
-
-		Toast.makeText(this, "Resolution: " + resX + "x" + resY + ", Bitrate: "
-				+ bitrate, Toast.LENGTH_LONG).show();
 
 		// Configures the SessionBuilder
 		SessionBuilder.getInstance().setSurfaceView(mSurfaceView)
 				.setPreviewOrientation(0).setContext(this)
-				.setVideoQuality(new VideoQuality(resX, resY, 20, bitrate))
+				.setVideoQuality(new VideoQuality(640, 480, 30, bitrate))
 				.setAudioEncoder(SessionBuilder.AUDIO_NONE)
 				.setVideoEncoder(SessionBuilder.VIDEO_H264);
+		
 		// Starts the RTSP server
 		getApplicationContext().startService(
 				new Intent(getApplicationContext(), RtspServer.class));

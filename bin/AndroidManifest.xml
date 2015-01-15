@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -38,7 +40,6 @@
             android:name="com.davisECS.virtualfrontview.ServerActivity"
             android:label="@string/title_activity_server"
             android:screenOrientation="portrait" >
-            
         </activity>
         <activity
             android:name="com.davisECS.virtualfrontview.ClientActivity"

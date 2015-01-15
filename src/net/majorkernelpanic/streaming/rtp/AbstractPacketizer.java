@@ -1,32 +1,9 @@
-/*
- * Copyright (C) 2011-2014 GUIGUI Simon, fyhertz@gmail.com
- * 
- * This file is part of libstreaming (https://github.com/fyhertz/libstreaming)
- * 
- * Spydroid is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- * 
- * This source code is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this source code; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
-
 package net.majorkernelpanic.streaming.rtp;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.util.Random;
-
-import net.majorkernelpanic.streaming.rtcp.SenderReport;
 
 /**
  * 
@@ -106,7 +83,7 @@ abstract public class AbstractPacketizer {
 
 		public final static String TAG = "Statistics";
 		
-		private int count=700, c = 0;
+		private int count=1, c = 0;
 		private float m = 0, q = 0;
 		private long elapsed = 0;
 		private long start = 0;
